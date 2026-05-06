@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Hrissy-Pissy • Product</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/CSS/styles.css" />
+  </head>
+
+  <body data-page="product">
+    <div class="page-banner" aria-hidden="true">
+      <div class="container">Shop Page</div>
+    </div>
+
+    <header class="topbar">
+      <div class="container nav">
+        <a class="brand" href="/">
+          <img
+            class="logo"
+            src="/static/Pictures/logo.png"
+            alt="Hrissy-Pissy Logo"
+          />
+        </a>
+
+        <nav class="navlinks">
+          <a href="/">Home</a>
+          <a href="/menu" class="active">Shop</a>
+          <a href="/about">About</a>
+          <a href="/service">Locations</a>
+        </nav>
+
+        <div class="navicons">
+          <a class="iconbtn" href="/menu">⌕</a>
+          <a class="iconbtn" href="/cart">🛒</a>
+          <button class="iconbtn" id="userBtn" aria-label="User">👤</button>
+        </div>
+
+        <div class="user-panel" id="userPanel">
+            <!-- LOGIN -->
+  <div class="login-form">
+    <h3>Login</h3>
+    <form class="form" onsubmit="return false">
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button id="loginSubmit" class="btn btn-primary btn-block" type="button">Login</button>
+      <p id="loginError" class="error-msg"></p>
+    </form>
+    <div class="user-divider"></div>
+    <div class="switch-link" id="switchToSignup">
+      Don't have an account? Sign up
+    </div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div class="signup-form">
+    <h3>Sign Up</h3>
+    <form class="form" onsubmit="return false">
+      <input type="text" id="signupUsername" placeholder="Name" required />
+      <input type="email" id="signupEmail" placeholder="Email" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
+      <p id="signupError" class="error-msg"></p>
+    </form>
+    <div class="user-divider"></div>
+    <div class="switch-link" id="switchToLogin">
+      Already have an account? Login
+    </div>
+  </div>
+
+          <!-- SIGNUP -->
+          <div class="signup-form">
+            <h3>Sign Up</h3>
+            <form class="form">
+              <input type="text" placeholder="Name" required />
+              <input type="email" placeholder="Email" required />
+              <input type="password" placeholder="Password" required />
+              <button class="btn btn-primary btn-block">Create Account</button>
+            </form>
+
+            <div class="user-divider"></div>
+
+            <div class="switch-link" id="switchToLogin">
+              Already have an account? Login
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="section-alt" style="padding: 34px 0 0">
+      <div class="container">
+        <a class="continue" href="/menu">⟵ Back to Shop</a>
+
+        <div class="product-page card-soft">
+          <div class="product-page-media">
+            <img id="product-image" src="" alt="" />
+          </div>
+
+          <div class="product-page-info">
+            <h1 class="page-h1" id="product-name"></h1>
+            <p class="prose" id="product-desc" style="max-width: none"></p>
+
+            <div class="product-page-buy">
+              <strong class="product-page-price" id="product-price"></strong>
+              <button
+                class="btn btn-primary add-to-cart"
+                id="add-to-cart"
+                data-name=""
+                data-price=""
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <div class="footer-brand">Hrissy-Pissy</div>
+          <div class="footer-line"></div>
+        </div>
+
+        <div class="footer-center">
+          <div class="footer-muted">
+            © 2026 Hrissy-Pissy Coffee. All rights reserved.
+          </div>
+          <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <span>|</span>
+            <a href="#">Terms of Service</a>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <a class="social" href="#">⌁</a>
+          <a class="social" href="#">𝕏</a>
+          <a class="social" href="#">f</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/static/JS/product.js"></script>
+  </body>
+</html>
