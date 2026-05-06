@@ -154,42 +154,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial render
   renderCart();
 
-    //login/signup panel
+// ---------- Logged-in panel ----------
+function showLoggedInPanel(username) {
+  userBtn.textContent = `👤 ${username}`;
+  userPanel.innerHTML = `
+    <div class="logged-in-panel">
+      <p class="logged-in-greeting">Welcome, <strong>${username}</strong>!</p>
+      <div class="user-divider"></div>
+      <button id="logoutBtn" class="btn btn-primary btn-block" type="button">Log Out</button>
+    </div>
+  `;
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await fetch(`${API}/logout`, { method: "POST", credentials: "include" });
+    location.reload();
+  });
+}
 
-  const userBtn = document.getElementById("userBtn");
-  const userPanel = document.getElementById("userPanel");
-  const switchToSignup = document.getElementById("switchToSignup");
-  const switchToLogin = document.getElementById("switchToLogin");
-
-  if (userBtn && userPanel) {
-
-    // toggle panel
-    userBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      userPanel.classList.toggle("open");
-    });
-
-    // close on outside click
-    document.addEventListener("click", (e) => {
-      if (!userPanel.contains(e.target) && e.target !== userBtn) {
-        userPanel.classList.remove("open");
-      }
-    });
-
-    // switch views
-    switchToSignup?.addEventListener("click", () => {
-      userPanel.classList.add("signup-mode");
-    });
-
-    switchToLogin?.addEventListener("click", () => {
-      userPanel.classList.remove("signup-mode");
-    });
-  }
-  //api calls for login/signup
-
-const API = "/api";
-
-// --- Login ---
 // --- Login ---
 const loginSubmit = document.getElementById("loginSubmit");
 const loginError  = document.getElementById("loginError");
@@ -230,9 +210,8 @@ loginSubmit?.addEventListener("click", async () => {
   const data = await res.json();
 
   if (res.ok) {
-    loginError.textContent = "";
     userPanel.classList.remove("open");
-    userBtn.textContent = `👤 ${data.username}`;
+    showLoggedInPanel(data.username);
   } else {
     loginError.textContent = data.error;
   }
@@ -313,13 +292,11 @@ signupSubmit?.addEventListener("click", async () => {
   }
 });
 
-// --- Check if already logged in on page load ---
+// --- Check session on page load ---
 fetch(`${API}/me`, { credentials: "include" })
   .then(r => r.json())
   .then(data => {
     if (data.username) {
-      userBtn.textContent = `👤 ${data.username}`;
+      showLoggedInPanel(data.username);
     }
   });
-
-});
