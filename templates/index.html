@@ -40,55 +40,34 @@
           <button class="iconbtn" id="userBtn" aria-label="User">👤</button>
         </div>
 
-        <div class="user-panel" id="userPanel">
-            <!-- LOGIN -->
-  <div class="login-form">
-    <h3>Login</h3>
-    <form class="form" onsubmit="return false">
-      <input type="email" id="loginEmail" placeholder="Email" required />
-      <input type="password" id="loginPassword" placeholder="Password" required />
-      <button id="loginSubmit" class="btn btn-primary btn-block" type="button">Login</button>
-      <p id="loginError" class="error-msg"></p>
-    </form>
-    <div class="user-divider"></div>
-    <div class="switch-link" id="switchToSignup">
-      Don't have an account? Sign up
+            <!-- USER PANEL (FIXED: only ONE) -->
+    <div class="user-panel" id="userPanel">
+
+      <!-- LOGIN -->
+      <div class="login-form">
+        <h3>Login</h3>
+        <input type="email" id="loginEmail" placeholder="Email" />
+        <input type="password" id="loginPassword" placeholder="Password" />
+        <button id="loginSubmit">Login</button>
+        <p id="loginError"></p>
+
+        <div class="switch-link" id="switchToSignup">Sign up</div>
+      </div>
+
+      <!-- SIGNUP -->
+      <div class="signup-form" style="display:none;">
+        <h3>Sign Up</h3>
+        <input type="text" id="signupUsername" placeholder="Name" />
+        <input type="email" id="signupEmail" placeholder="Email" />
+        <input type="password" id="signupPassword" placeholder="Password" />
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm" />
+        <button id="signupSubmit">Create Account</button>
+        <p id="signupError"></p>
+
+        <div class="switch-link" id="switchToLogin">Login</div>
+      </div>
+
     </div>
-  </div>
-
-  <!-- SIGNUP -->
-  <div class="signup-form">
-    <h3>Sign Up</h3>
-    <form class="form" onsubmit="return false">
-      <input type="text" id="signupUsername" placeholder="Name" required />
-      <input type="email" id="signupEmail" placeholder="Email" required />
-      <input type="password" id="signupPassword" placeholder="Password" required />
-      <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
-      <p id="signupError" class="error-msg"></p>
-    </form>
-    <div class="user-divider"></div>
-    <div class="switch-link" id="switchToLogin">
-      Already have an account? Login
-    </div>
-  </div>
-
-          <!-- SIGNUP -->
-          <div class="signup-form">
-            <h3>Sign Up</h3>
-            <form class="form">
-              <input type="text" placeholder="Name" required />
-              <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
-              <button class="btn btn-primary btn-block">Create Account</button>
-            </form>
-
-            <div class="user-divider"></div>
-
-            <div class="switch-link" id="switchToLogin">
-              Already have an account? Log in
-            </div>
-          </div>
-        </div>
       </div>
     </header>
 
