@@ -3,13 +3,29 @@ from flask_cors import CORS
 import psycopg2
 import bcrypt
 import os
+import re
 from dotenv import load_dotenv
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", "lubabd")
+app.secret_key = os.getenv("SECRET_KEY")
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SECURE=True,  
+    SESSION_COOKIE_SAMESITE='Lax'
+)
 CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5002", "http://localhost:5002"])
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
+)
 
 # ---------- DB Connection ----------
 def get_db():
@@ -51,6 +67,16 @@ def signup():
 
     if not username or not email or not password:
         return jsonify({"error": "All fields are required."}), 400
+    
+    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    if not re.match(email_regex, email):
+        return jsonify({"error": "Please enter a valid email address."}), 400
+    
+    if len(password) < 8:
+        return jsonify({"error": "Password must be at least 8 characters long."}), 400
+    
+    if len(username) < 3:
+        return jsonify({"error": "Username must be at least 3 characters long."}), 400
 
     hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
@@ -73,6 +99,7 @@ def signup():
 
 # ---------- LOGIN ----------
 @app.route("/api/login", methods=["POST"])
+@limiter.limit("5 per minute")
 def login():
     data = request.get_json()
     email    = data.get("email", "").strip()
@@ -119,3 +146,10 @@ def me():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5002))
     app.run(host="0.0.0.0", port=port)
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    return response

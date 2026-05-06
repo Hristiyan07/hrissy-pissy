@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!cartContainer) return; // ако не сме на cart page
 
-    cartContainer.innerHTML = "";
+    cartContainer.textContent = "";
     let subtotal = 0;
 
     if (cart.length === 0) {
-      cartContainer.innerHTML = `
+      cartContainer.textContent = `
         <div class="empty-cart">
           Your cart is empty ☕
         </div>
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.classList.add("cart-row");
       row.dataset.id = item.id;
 
-      row.innerHTML = `
+      row.textContent = `
         <div class="cart-item">
           <div class="cart-name">${item.name}</div>
           <div class="cart-sub">
@@ -223,6 +223,9 @@ signupSubmit?.addEventListener("click", async () => {
   const username = document.getElementById("signupUsername").value.trim();
   const email    = document.getElementById("signupEmail").value.trim();
   const password = document.getElementById("signupPassword").value;
+  if (password.length < 8) {
+    document.getElementById('signupError').textContent = "Password must be 8+ characters";
+    return;}
 
   const res  = await fetch(`${API}/signup`, {
     method: "POST",
