@@ -1,22 +1,22 @@
 from flask import Flask, request, jsonify, session, render_template
 from flask_cors import CORS
-import pyodbc
+import psycopg2
 import bcrypt
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "lubabd"
-CORS(app, supports_credentials=True, origins=["null", "http://localhost:5000", "http://127.0.0.1:5000"])
+app.secret_key = os.getenv("SECRET_KEY", "lubabd")
+CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5002", "http://localhost:5002"])
 
+# ---------- DB Connection ----------
 def get_db():
-    conn = pyodbc.connect(
-        "DRIVER={ODBC Driver 17 for SQL Server};"
-        "SERVER=DESKTOP-8HTO2EI;"
-        "DATABASE=HrissyPissyDB;"
-        "UID=web_user;"
-        "PWD=123456789;"
-    )
+    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
     return conn
 
+# ---------- Page Routes ----------
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -41,11 +41,12 @@ def product():
 def service():
     return render_template("service.html")
 
+# ---------- SIGNUP ----------
 @app.route("/api/signup", methods=["POST"])
 def signup():
     data = request.get_json()
     username = data.get("username", "").strip()
-    email = data.get("email", "").strip()
+    email    = data.get("email", "").strip()
     password = data.get("password", "")
 
     if not username or not email or not password:
@@ -57,30 +58,34 @@ def signup():
         conn = get_db()
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)",
-            username, email, hashed.decode("utf-8")
+            "INSERT INTO Users (username, email, password_hash) VALUES (%s, %s, %s)",
+            (username, email, hashed.decode("utf-8"))
         )
         conn.commit()
+        cursor.close()
         conn.close()
         return jsonify({"message": "Account created successfully!"}), 201
-    except pyodbc.IntegrityError:
+
+    except psycopg2.errors.UniqueViolation:
         return jsonify({"error": "Username or email already exists."}), 409
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ---------- LOGIN ----------
 @app.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
-    email = data.get("email", "").strip()
+    email    = data.get("email", "").strip()
     password = data.get("password", "")
 
     try:
         conn = get_db()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT userID, username, password_hash FROM Users WHERE email = ?", email
+            "SELECT userID, username, password_hash FROM Users WHERE email = %s", (email,)
         )
         row = cursor.fetchone()
+        cursor.close()
         conn.close()
 
         if not row:
@@ -94,14 +99,17 @@ def login():
             return jsonify({"message": "Logged in!", "username": username}), 200
         else:
             return jsonify({"error": "Invalid email or password."}), 401
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ---------- LOGOUT ----------
 @app.route("/api/logout", methods=["POST"])
 def logout():
     session.clear()
     return jsonify({"message": "Logged out."}), 200
 
+# ---------- CHECK SESSION ----------
 @app.route("/api/me", methods=["GET"])
 def me():
     if "user_id" in session:
