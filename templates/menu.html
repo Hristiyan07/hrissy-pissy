@@ -33,16 +33,12 @@
 
       <div class="user-panel" id="userPanel">
 
-    <div class="user-panel" id="userPanel">
-
-  <!-- LOGIN -->
+    <!-- LOGIN -->
   <div class="login-form">
     <h3>Login</h3>
     <form class="form" onsubmit="return false">
       <input type="email" id="loginEmail" placeholder="Email" required />
-      <span class="field-error" id="loginEmailError"></span>
       <input type="password" id="loginPassword" placeholder="Password" required />
-      <span class="field-error" id="loginPasswordError"></span>
       <button id="loginSubmit" class="btn btn-primary btn-block" type="button">Login</button>
       <p id="loginError" class="error-msg"></p>
     </form>
@@ -57,18 +53,8 @@
     <h3>Sign Up</h3>
     <form class="form" onsubmit="return false">
       <input type="text" id="signupUsername" placeholder="Name" required />
-<<<<<<< HEAD
-      <span class="field-error" id="signupUsernameError"></span>
-      <input type="email" id="signupEmail" placeholder="Email" required />
-      <span class="field-error" id="signupEmailError"></span>
-      <input type="password" id="signupPassword" placeholder="Password" required />
-      <span class="field-error" id="signupPasswordError"></span>
-      <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required />
-      <span class="field-error" id="signupConfirmPasswordError"></span>
-=======
       <input type="email" id="signupEmail" placeholder="Email" required />
       <input type="password" id="signupPassword" placeholder="Password" required />
->>>>>>> parent of 1a121c8 (fix sign up)
       <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
       <p id="signupError" class="error-msg"></p>
     </form>
@@ -77,10 +63,24 @@
       Already have an account? Login
     </div>
   </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 1a121c8 (fix sign up)
+  <!-- SIGNUP -->
+  <div class="signup-form">
+    <h3>Sign Up</h3>
+    <form class="form">
+      <input type="text" id="signupUsername" placeholder="Name" required>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password" required>
+      <button class="btn btn-primary btn-block">Create Account</button>
+    </form>
+
+    <div class="user-divider"></div>
+
+    <div class="switch-link" id="switchToLogin">
+      Already have an account? Login
+    </div>
+  </div>
+
 </div>
     </div>
   </header>
