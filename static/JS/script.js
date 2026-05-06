@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let subtotal = 0;
 
     if (cart.length === 0) {
-      cartContainer.textContent = `
+      cartContainer.innerHTML = `
         <div class="empty-cart">
           Your cart is empty ☕
         </div>
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.classList.add("cart-row");
       row.dataset.id = item.id;
 
-      row.textContent = `
+      row.innerHTML = `
         <div class="cart-item">
           <div class="cart-name">${item.name}</div>
           <div class="cart-sub">
