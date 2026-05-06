@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <title>Hrissy-Pissy • Shop</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/static/CSS/styles.css" />
-  </head>
+</head>
 
 <body data-page="menu">
   <div class="page-banner" aria-hidden="true">
@@ -15,7 +16,7 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="/" aria-label="Hrissy-Pissy home">
-         <img class="logo" src="/static/Pictures/logo.png" alt="Hrissy-Pissy Logo">
+        <img class="logo" src="/static/Pictures/logo.png" alt="Hrissy-Pissy Logo">
       </a>
 
       <nav class="navlinks" aria-label="Primary navigation">
@@ -32,56 +33,37 @@
       </div>
 
       <div class="user-panel" id="userPanel">
+        <!-- LOGIN -->
+        <div class="login-form">
+          <h3>Login</h3>
+          <form class="form" onsubmit="return false">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <button id="loginSubmit" class="btn btn-primary btn-block" type="button">Login</button>
+            <p id="loginError" class="error-msg"></p>
+          </form>
+          <div class="user-divider"></div>
+          <div class="switch-link" id="switchToSignup">
+            Don't have an account? Sign up
+          </div>
+        </div>
 
-    <!-- LOGIN -->
-  <div class="login-form">
-    <h3>Login</h3>
-    <form class="form" onsubmit="return false">
-      <input type="email" id="loginEmail" placeholder="Email" required />
-      <input type="password" id="loginPassword" placeholder="Password" required />
-      <button id="loginSubmit" class="btn btn-primary btn-block" type="button">Login</button>
-      <p id="loginError" class="error-msg"></p>
-    </form>
-    <div class="user-divider"></div>
-    <div class="switch-link" id="switchToSignup">
-      Don't have an account? Sign up
-    </div>
-  </div>
-
-  <!-- SIGNUP -->
-  <div class="signup-form">
-    <h3>Sign Up</h3>
-    <form class="form" onsubmit="return false">
-      <input type="text" id="signupUsername" placeholder="Name" required />
-      <input type="email" id="signupEmail" placeholder="Email" required />
-      <input type="password" id="signupPassword" placeholder="Password" required />
-      <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
-      <p id="signupError" class="error-msg"></p>
-    </form>
-    <div class="user-divider"></div>
-    <div class="switch-link" id="switchToLogin">
-      Already have an account? Login
-    </div>
-  </div>
-
-  <!-- SIGNUP -->
-  <div class="signup-form">
-    <h3>Sign Up</h3>
-    <form class="form">
-      <input type="text" id="signupUsername" placeholder="Name" required>
-      <input type="email" id="signupEmail" placeholder="Email" required>
-      <input type="password" id="signupPassword" placeholder="Password" required>
-      <button class="btn btn-primary btn-block">Create Account</button>
-    </form>
-
-    <div class="user-divider"></div>
-
-    <div class="switch-link" id="switchToLogin">
-      Already have an account? Login
-    </div>
-  </div>
-
-</div>
+        <!-- SIGNUP -->
+        <div class="signup-form">
+          <h3>Sign Up</h3>
+          <form class="form" onsubmit="return false">
+            <input type="text" id="signupUsername" placeholder="Name" required />
+            <input type="email" id="signupEmail" placeholder="Email" required />
+            <input type="password" id="signupPassword" placeholder="Password" required />
+            <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
+            <p id="signupError" class="error-msg"></p>
+          </form>
+          <div class="user-divider"></div>
+          <div class="switch-link" id="switchToLogin">
+            Already have an account? Login
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -104,130 +86,118 @@
           </div>
         </aside>
 
-<div class="products-area">
-  <div class="shop-search">
-    <input type="search" id="productSearch" placeholder="Search coffee...">
-    <span id="productSearchCount"></span>
-  </div>
+        <div class="products-area">
+          <div class="shop-search">
+            <input type="search" id="productSearch" placeholder="Search coffee...">
+            <span id="productSearchCount"></span>
+          </div>
 
-  <div id="noProductsMessage" class="no-products">
-    No products found.
-  </div>
+          <div id="noProductsMessage" class="no-products">
+            No products found.
+          </div>
 
-        <!-- Products -->
-      <section class="products" aria-label="Products">
+          <!-- Products -->
+          <section class="products" aria-label="Products">
 
-  <article class="product-tile">
-    <a href="/product?id=midnight">
-      <img src="/static/Pictures/prod-midnight.jpg" alt="Midnight Elegance" />
-    </a>
-    <div class="tile-body">
-      <h3>Midnight Elegance</h3>
-      <p>Dark roast with notes of chocolate and caramel</p>
-      <div class="tile-bottom">
-        <strong>$18.99</strong>
-        <button class="btn btn-sm add-to-cart"
-          data-name="Midnight Elegance"
-          data-price="18.99">
-          Add to Cart
-        </button>
+            <article class="product-tile">
+              <a href="/product?id=midnight">
+                <img src="/static/Pictures/prod-midnight.jpg" alt="Midnight Elegance" />
+              </a>
+              <div class="tile-body">
+                <h3>Midnight Elegance</h3>
+                <p>Dark roast with notes of chocolate and caramel</p>
+                <div class="tile-bottom">
+                  <strong>$18.99</strong>
+                  <button class="btn btn-sm add-to-cart" data-name="Midnight Elegance" data-price="18.99">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-tile">
+              <a href="/product?id=amber">
+                <img src="/static/Pictures/prod-amber.jpg" alt="Amber Sunrise" />
+              </a>
+              <div class="tile-body">
+                <h3>Amber Sunrise</h3>
+                <p>Medium roast with citrus and floral undertones</p>
+                <div class="tile-bottom">
+                  <strong>$16.99</strong>
+                  <button class="btn btn-sm add-to-cart" data-name="Amber Sunrise" data-price="16.99">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-tile">
+              <a href="/product?id=highland">
+                <img src="/static/Pictures/prod-highland.jpg" alt="Highland Reserve" />
+              </a>
+              <div class="tile-body">
+                <h3>Highland Reserve</h3>
+                <p>Light roast with berry and nutty notes</p>
+                <div class="tile-bottom">
+                  <strong>$17.99</strong>
+                  <button class="btn btn-sm add-to-cart" data-name="Highland Reserve" data-price="17.99">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-tile">
+              <a href="/product?id=xpresso">
+                <img src="/static/Pictures/prod-xpresso.jpg" alt="Xpresso Noir" />
+              </a>
+              <div class="tile-body">
+                <h3>Xpresso Noir</h3>
+                <p>Bold espresso blend with rich crema</p>
+                <div class="tile-bottom">
+                  <strong>$10.99</strong>
+                  <button class="btn btn-sm add-to-cart" data-name="Xpresso Noir" data-price="10.99">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-tile">
+              <a href="/product?id=vanilla">
+                <img src="/static/Pictures/prod-vanilla.jpg" alt="Vanilla Dream" />
+              </a>
+              <div class="tile-body">
+                <h3>Vanilla Dream</h3>
+                <p>Medium roast infused with natural vanilla</p>
+                <div class="tile-bottom">
+                  <strong>$18.99</strong>
+                  <button class="btn btn-sm add-to-cart" data-name="Vanilla Dream" data-price="18.99">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-tile">
+              <a href="/product?id=decaf">
+                <img src="/static/Pictures/prod-decaf.jpg" alt="Decaf Elegance" />
+              </a>
+              <div class="tile-body">
+                <h3>Decaf Elegance</h3>
+                <p>Decaffeinated medium roast with chocolate notes</p>
+                <div class="tile-bottom">
+                  <strong>$17.99</strong>
+                  <button class="btn btn-sm add-to-cart" data-name="Decaf Elegance" data-price="17.99">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </article>
+
+          </section>
+        </div>
       </div>
-    </div>
-  </article>
-
-  <article class="product-tile">
-    <a href="/product?id=amber">
-      <img src="/static/Pictures/prod-amber.jpg" alt="Amber Sunrise" />
-    </a>
-    <div class="tile-body">
-      <h3>Amber Sunrise</h3>
-      <p>Medium roast with citrus and floral undertones</p>
-      <div class="tile-bottom">
-        <strong>$16.99</strong>
-        <button class="btn btn-sm add-to-cart"
-          data-name="Amber Sunrise"
-          data-price="16.99">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  </article>
-
-  <article class="product-tile">
-    <a href="/product?id=highland">
-      <img src="/static/Pictures/prod-highland.jpg" alt="Highland Reserve" />
-    </a>
-    <div class="tile-body">
-      <h3>Highland Reserve</h3>
-      <p>Light roast with berry and nutty notes</p>
-      <div class="tile-bottom">
-        <strong>$17.99</strong>
-        <button class="btn btn-sm add-to-cart"
-          data-name="Highland Reserve"
-          data-price="17.99">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  </article>
-
-  <article class="product-tile">
-    <a href="/product?id=xpresso">
-      <img src="/static/Pictures/prod-xpresso.jpg" alt="Xpresso Noir" />
-    </a>
-    <div class="tile-body">
-      <h3>Xpresso Noir</h3>
-      <p>Bold espresso blend with rich crema</p>
-      <div class="tile-bottom">
-        <strong>$10.99</strong>
-        <button class="btn btn-sm add-to-cart"
-          data-name="Xpresso Noir"
-          data-price="10.99">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  </article>
-
-  <article class="product-tile">
-    <a href="/product?id=vanilla">
-      <img src="/static/Pictures/prod-vanilla.jpg" alt="Vanilla Dream" />
-    </a>
-    <div class="tile-body">
-      <h3>Vanilla Dream</h3>
-      <p>Medium roast infused with natural vanilla</p>
-      <div class="tile-bottom">
-        <strong>$18.99</strong>
-        <button class="btn btn-sm add-to-cart"
-          data-name="Vanilla Dream"
-          data-price="18.99">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  </article>
-
-  <article class="product-tile">
-    <a href="/product?id=decaf">
-      <img src="/static/Pictures/prod-decaf.jpg" alt="Decaf Elegance" />
-    </a>
-    <div class="tile-body">
-      <h3>Decaf Elegance</h3>
-      <p>Decaffeinated medium roast with chocolate notes</p>
-      <div class="tile-bottom">
-        <strong>$17.99</strong>
-        <button class="btn btn-sm add-to-cart"
-          data-name="Decaf Elegance"
-          data-price="17.99">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  </article>
-
-</section>
-      </div>
-    </div>
   </main>
 
   <footer class="footer">
@@ -257,4 +227,5 @@
   <script src="/static/JS/searchScript.js"></script>
   <script src="/static/JS/menu.js"></script>
 </body>
+
 </html>
