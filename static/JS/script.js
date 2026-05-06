@@ -190,16 +190,39 @@ document.addEventListener("DOMContentLoaded", () => {
 const API = "/api";
 
 // --- Login ---
+// --- Login ---
 const loginSubmit = document.getElementById("loginSubmit");
 const loginError  = document.getElementById("loginError");
 
+function clearLoginErrors() {
+  document.getElementById("loginEmailError").textContent = "";
+  document.getElementById("loginPasswordError").textContent = "";
+  loginError.textContent = "";
+}
+
 loginSubmit?.addEventListener("click", async () => {
+  clearLoginErrors();
+
   const email    = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
 
+  let hasError = false;
+
+  if (!email || !/^[\w.-]+@[\w.-]+\.\w{2,}$/.test(email)) {
+    document.getElementById("loginEmailError").textContent = "Please enter a valid email address.";
+    hasError = true;
+  }
+
+  if (!password) {
+    document.getElementById("loginPasswordError").textContent = "Password is required.";
+    hasError = true;
+  }
+
+  if (hasError) return;
+
   const res  = await fetch(`${API}/login`, {
     method: "POST",
-    credentials: "include",           // needed for session cookie
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
   });
@@ -209,7 +232,7 @@ loginSubmit?.addEventListener("click", async () => {
   if (res.ok) {
     loginError.textContent = "";
     userPanel.classList.remove("open");
-    userBtn.textContent = `👤 ${data.username}`;  // show username in nav
+    userBtn.textContent = `👤 ${data.username}`;
   } else {
     loginError.textContent = data.error;
   }
@@ -219,10 +242,57 @@ loginSubmit?.addEventListener("click", async () => {
 const signupSubmit = document.getElementById("signupSubmit");
 const signupError  = document.getElementById("signupError");
 
+function clearSignupErrors() {
+  document.getElementById("signupUsernameError").textContent = "";
+  document.getElementById("signupEmailError").textContent = "";
+  document.getElementById("signupPasswordError").textContent = "";
+  document.getElementById("signupConfirmPasswordError").textContent = "";
+  signupError.textContent = "";
+}
+
 signupSubmit?.addEventListener("click", async () => {
-  const username = document.getElementById("signupUsername").value.trim();
-  const email    = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value;
+  clearSignupErrors();
+
+  const username        = document.getElementById("signupUsername").value.trim();
+  const email           = document.getElementById("signupEmail").value.trim();
+  const password        = document.getElementById("signupPassword").value;
+  const confirmPassword = document.getElementById("signupConfirmPassword").value;
+
+  let hasError = false;
+
+  if (!username || username.length < 3 || username.length > 30) {
+    document.getElementById("signupUsernameError").textContent = "Name must be between 3 and 30 characters.";
+    hasError = true;
+  } else if (!/^[\w.\- ]+$/.test(username)) {
+    document.getElementById("signupUsernameError").textContent = "Name contains invalid characters.";
+    hasError = true;
+  }
+
+  if (!email || !/^[\w.-]+@[\w.-]+\.\w{2,}$/.test(email)) {
+    document.getElementById("signupEmailError").textContent = "Please enter a valid email address.";
+    hasError = true;
+  }
+
+  if (password.length < 8) {
+    document.getElementById("signupPasswordError").textContent = "Password must be at least 8 characters.";
+    hasError = true;
+  } else if (!/[A-Z]/.test(password)) {
+    document.getElementById("signupPasswordError").textContent = "Password needs at least one uppercase letter.";
+    hasError = true;
+  } else if (!/[a-z]/.test(password)) {
+    document.getElementById("signupPasswordError").textContent = "Password needs at least one lowercase letter.";
+    hasError = true;
+  } else if (!/\d/.test(password)) {
+    document.getElementById("signupPasswordError").textContent = "Password needs at least one number.";
+    hasError = true;
+  }
+
+  if (password !== confirmPassword) {
+    document.getElementById("signupConfirmPasswordError").textContent = "Passwords do not match.";
+    hasError = true;
+  }
+
+  if (hasError) return;
 
   const res  = await fetch(`${API}/signup`, {
     method: "POST",
@@ -236,7 +306,7 @@ signupSubmit?.addEventListener("click", async () => {
   if (res.ok) {
     signupError.style.color = "green";
     signupError.textContent = "Account created! You can now log in.";
-    userPanel.classList.remove("signup-mode"); // switch back to login view
+    userPanel.classList.remove("signup-mode");
   } else {
     signupError.style.color = "red";
     signupError.textContent = data.error;
