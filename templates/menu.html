@@ -48,22 +48,28 @@
     </div>
   </div>
 
-  <!-- SIGNUP -->
-  <div class="signup-form">
-    <h3>Sign Up</h3>
-    <form class="form" onsubmit="return false">
-      <input type="text" id="signupUsername" placeholder="Name" required />
-      <input type="email" id="signupEmail" placeholder="Email" required />
-      <input type="password" id="signupPassword" placeholder="Password" required />
-      <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
-      <p id="signupError" class="error-msg"></p>
-    </form>
-    <div class="user-divider"></div>
-    <div class="switch-link" id="switchToLogin">
-      Already have an account? Login
-    </div>
-  </div>
-</div>
+        <!-- SIGNUP -->
+        <div class="signup-form">
+          <h3>Sign Up</h3>
+          <form class="form" onsubmit="return false">
+            <input type="text" id="signupUsername" placeholder="Name" required />
+            <span class="field-error" id="signupUsernameError"></span>
+            <input type="email" id="signupEmail" placeholder="Email" required />
+            <span class="field-error" id="signupEmailError"></span>
+            <input type="password" id="signupPassword" placeholder="Password" required />
+            <span class="field-error" id="signupPasswordError"></span>
+            <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required />
+            <span class="field-error" id="signupConfirmPasswordError"></span>
+            <button id="signupSubmit" class="btn btn-primary btn-block" type="button">Create Account</button>
+            <p id="signupError" class="error-msg"></p>
+          </form>
+          <div class="user-divider"></div>
+          <div class="switch-link" id="switchToLogin">
+            Already have an account? Login
+          </div>
+        </div>
+
+      </div>
     </div>
   </header>
 
