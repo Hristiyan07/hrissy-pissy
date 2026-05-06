@@ -3,6 +3,7 @@ from flask_cors import CORS
 import psycopg2
 import bcrypt
 import os
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -41,19 +42,50 @@ def product():
 def service():
     return render_template("service.html")
 
+# ---------- Helpers ----------
+def is_valid_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w{2,}$'
+    return re.match(pattern, email) is not None
+
+def is_strong_password(password):
+    # At least 8 chars, 1 uppercase, 1 lowercase, 1 digit
+    if len(password) < 8:
+        return False, "Password must be at least 8 characters."
+    if not re.search(r'[A-Z]', password):
+        return False, "Password must contain at least one uppercase letter."
+    if not re.search(r'[a-z]', password):
+        return False, "Password must contain at least one lowercase letter."
+    if not re.search(r'\d', password):
+        return False, "Password must contain at least one number."
+    return True, ""
+
 # ---------- SIGNUP ----------
 @app.route("/api/signup", methods=["POST"])
 def signup():
     data = request.get_json()
     username = data.get("username", "").strip()
-    email    = data.get("email", "").strip()
+    email = data.get("email", "").strip().lower()
     password = data.get("password", "")
 
+    # --- Validation ---
     if not username or not email or not password:
         return jsonify({"error": "All fields are required."}), 400
 
-    hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+    if len(username) < 3 or len(username) > 30:
+        return jsonify({"error": "Username must be between 3 and 30 characters."}), 400
 
+    if not re.match(r'^[\w.-]+$', username):
+        return jsonify({"error": "Username can only contain letters, numbers, underscores, hyphens, and dots."}), 400
+
+    if not is_valid_email(email):
+        return jsonify({"error": "Invalid email address."}), 400
+
+    valid_pw, pw_msg = is_strong_password(password)
+    if not valid_pw:
+        return jsonify({"error": pw_msg}), 400
+
+    # --- Insert ---
+    hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
     try:
         conn = get_db()
         cursor = conn.cursor()
@@ -65,7 +97,6 @@ def signup():
         cursor.close()
         conn.close()
         return jsonify({"message": "Account created successfully!"}), 201
-
     except psycopg2.errors.UniqueViolation:
         return jsonify({"error": "Username or email already exists."}), 409
     except Exception as e:
@@ -75,8 +106,14 @@ def signup():
 @app.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
-    email    = data.get("email", "").strip()
+    email = data.get("email", "").strip().lower()
     password = data.get("password", "")
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required."}), 400
+
+    if not is_valid_email(email):
+        return jsonify({"error": "Invalid email address."}), 400
 
     try:
         conn = get_db()
@@ -92,14 +129,12 @@ def login():
             return jsonify({"error": "Invalid email or password."}), 401
 
         user_id, username, stored_hash = row
-
         if bcrypt.checkpw(password.encode("utf-8"), stored_hash.encode("utf-8")):
             session["user_id"] = user_id
             session["username"] = username
             return jsonify({"message": "Logged in!", "username": username}), 200
         else:
             return jsonify({"error": "Invalid email or password."}), 401
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -745,3 +745,11 @@ input,textarea{font:inherit}
 .switch-link { font-size: 12px; text-align: center; cursor: pointer; color: var(--accent); }
 .switch-link:hover { text-decoration: underline; }
 #userBtn.active { background: var(--brown); color: #fff; border-color: var(--brown); }
+
+.error-msg {
+    color: #e53e3e;
+    font-size: 0.82rem;
+    display: block;
+    margin-top: 2px;
+    min-height: 1em;
+}
